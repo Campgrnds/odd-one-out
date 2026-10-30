@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Odd One Out: Real or AI?</title>
+  <meta name="description" content="A classroom game: look at each photo and decide whether it is a real photograph or AI generated.">
+  <meta name="theme-color" content="#060F1F">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A1628'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' text-anchor='middle' fill='%23E8B048'%3E%3F%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&family=Syne:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <!-- Start screen -->
+    <section id="screen-start" class="screen screen-start" aria-labelledby="start-title">
+      <div class="panel start-panel">
+        <h1 id="start-title" class="title">
+          <span class="title-main">Odd One Out</span>
+          <span class="title-sub">Real or AI?</span>
+        </h1>
+        <p class="lead">Look closely at each photo and decide whether a camera captured it or AI generated it.</p>
+
+        <div class="guide" aria-label="Controls">
+          <div class="guide-side guide-ai">
+            <span class="guide-key" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+            </span>
+            <span class="guide-text">
+              <strong>AI Generated</strong>
+              <span>Left arrow key, left button, or swipe left</span>
+            </span>
+          </div>
+          <div class="guide-side guide-real">
+            <span class="guide-key" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            </span>
+            <span class="guide-text">
+              <strong>Real Photo</strong>
+              <span>Right arrow key, right button, or swipe right</span>
+            </span>
+          </div>
+        </div>
+
+        <p class="rules">You have <strong id="start-lives" class="mono">5</strong> lives. Each correct answer is worth <strong id="start-points" class="mono">10</strong> points.</p>
+
+        <button id="start-btn" class="btn btn-primary" type="button">Start</button>
+        <p class="key-hint">or press <kbd>Enter</kbd> / <kbd>Space</kbd></p>
+        <p id="no-images" class="no-images" hidden>No images found. Add photos to <code>source/real</code> and <code>source/ai</code>, then run <code>node build.js</code>.</p>
+      </div>
+    </section>
+
+    <!-- Game screen -->
+    <section id="screen-game" class="screen screen-game" aria-label="Game" hidden>
+      <div class="stage">
+        <button id="btn-ai" class="arrow-btn arrow-ai" type="button" aria-label="AI Generated (left arrow key)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          <span>AI Generated</span>
+        </button>
+
+        <div class="card-wrap">
+          <div id="card" class="card">
+            <div id="card-media" class="card-media"></div>
+            <div id="stamp-ai" class="stamp stamp-ai" aria-hidden="true">AI</div>
+            <div id="stamp-real" class="stamp stamp-real" aria-hidden="true">REAL</div>
+          </div>
+          <div id="feedback" class="feedback" role="status" aria-live="assertive"></div>
+        </div>
+
+        <button id="btn-real" class="arrow-btn arrow-real" type="button" aria-label="Real Photo (right arrow key)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          <span>Real Photo</span>
+        </button>
+      </div>
+
+      <p class="swipe-hint">Drag the photo, tap a button, or press <kbd>&larr;</kbd> <kbd>&rarr;</kbd></p>
+
+      <footer class="hud">
+        <div id="hearts" class="hearts" role="img" aria-label="5 lives left"></div>
+        <div class="score-box">
+          <span class="hud-label">Score</span>
+          <span id="score" class="score mono">0</span>
+          <span id="score-float" class="score-float mono" aria-hidden="true"></span>
+        </div>
+        <div id="counter" class="counter mono">Image 1 of 1</div>
+      </footer>
+    </section>
+
+    <!-- End screen -->
+    <section id="screen-end" class="screen screen-end" aria-labelledby="end-title" hidden>
+      <div class="panel end-panel">
+        <h2 id="end-title" class="end-title" tabindex="-1">Out of lives!</h2>
+        <p id="end-sub" class="end-sub"></p>
+
+        <div class="final">
+          <span class="final-label">Final score</span>
+          <span id="final-score" class="final-score mono">0</span>
+        </div>
+
+        <dl class="stats">
+          <div class="stat stat-correct">
+            <dt>Correct</dt>
+            <dd id="stat-correct" class="mono">0</dd>
+          </div>
+          <div class="stat stat-wrong">
+            <dt>Wrong</dt>
+            <dd id="stat-wrong" class="mono">0</dd>
+          </div>
+          <div class="stat stat-accuracy">
+            <dt>Accuracy</dt>
+            <dd id="stat-accuracy" class="mono">0%</dd>
+          </div>
+        </dl>
+
+        <button id="again-btn" class="btn btn-primary" type="button">Play Again</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="manifest.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+node_modules/
+.herenow/
+.impeccable/
+.DS_Store
+# Source images are the answer key (real vs AI); kept private
+source/real/
+source/ai/
